@@ -12,14 +12,14 @@
 | last-name             | string | null: false |
 | first-name-kana       | string | null: false |
 | last-name-kana        | string | null: false |
-| birth-date            | string | null: false |
+| birth-date            | date   | null: false |
 
 
 ### Association
 
 - has_many :items
 - has_one  :deliveries
-- has_one  :purchasers
+- has_many :purchasers
 
 ## items テーブル
 
@@ -38,6 +38,7 @@
 ### Association
 
 - belongs_to :user
+- has_one    :purchaser
 
 ## deliveries テーブル
 
@@ -47,24 +48,25 @@
 | prefecture          | integer    | null: false                    |
 | city                | string     | null: false                    |
 | addresses           | string     | null: false                    |
-| building            | string     | null: false                    |
-| phone-number        | integer    | null: false                    |
+| building            | string     |                                |
+| phone-number        | string     | null: false                    |
 | user                | references | null: false, foreign_key: true |
+| purchaser           | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
+- belongs_to :purchaser
 
 ## purchasers テーブル
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
-| card-number    | integer    | null: false                    |
-| card-exp-month | integer    | null: false                    |
-| card-exp-year  | integer    | null: false                    |
-| card-cvc       | integer    | null: false                    |
+| item           | references | null: false, foreign_key: true |
 | user           | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
+- belongs_to :item
+- has_one    :deliverie
