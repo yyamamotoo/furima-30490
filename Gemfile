@@ -67,3 +67,7 @@ gem "active_hash"
 gem "gimei"
 
 gem "pry-rails"
+
+group :production do
+  gem "rails_12factor"
+end
