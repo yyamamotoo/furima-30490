@@ -7,8 +7,9 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   validates :birth_date, presence: true
   validates :password, confirmation: true
-  validates :email, presence: true
   validates :email, uniqueness: true
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, message: "@ Including" }
+
 
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: 'Full-width characters' } do
     validates :first_name
