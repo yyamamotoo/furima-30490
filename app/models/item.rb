@@ -22,6 +22,6 @@ class Item < ApplicationRecord
   end
 
   validates :price, numericality: { only_integer: true, message: "Half-width characters" }
-  validates :price, numericality: { :greater_than_or_equal_to: 300, :less_than_or_equal_to: 9999999 }
+  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   validates :item_category_id, :item_sales_status_id, :item_shipping_fee_status_id, :item_prefecture_id, :item_scheduled_delivery_id, numericality: { other_than: 1, message: "select" }
 end
