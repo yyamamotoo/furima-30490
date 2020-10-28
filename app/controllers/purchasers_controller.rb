@@ -1,17 +1,9 @@
 class PurchasersController < ApplicationController
   before_action :authenticate_user!
   before_action :deli, only: [:index, :create]
+  before_action :redirect, only: [:index]
 
   def index
-    @user_deli = UserDeli.new
-    if @item.purchaser.present?
-      redirect_to root_path
-    elsif current_user == @item.user
-      redirect_to root_path
-    end
-  end
-
-  def new
     @user_deli = UserDeli.new
   end
 
@@ -23,7 +15,6 @@ class PurchasersController < ApplicationController
       @user_deli.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -45,5 +36,11 @@ class PurchasersController < ApplicationController
 
   def deli
     @item = Item.find(params[:item_id])
+  end
+
+  def redirect
+    if @item.purchaser.present? || current_user == @item.user
+      redirect_to root_path
+    end
   end
 end
