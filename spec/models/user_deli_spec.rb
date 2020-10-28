@@ -68,6 +68,12 @@ RSpec.describe UserDeli, type: :model do
       expect(@user_deli.errors.full_messages).to include("Phone number Please enter 10 to 11 Half-width characters numbers")
     end
 
+    it 'phone_numberが12桁以上だと保存できない' do
+      @user_deli.phone_number = "0801111222233"
+      @user_deli.valid?
+      expect(@user_deli.errors.full_messages).to include("Phone number Please enter 10 to 11 Half-width characters numbers")
+    end
+
     it "tokenが空では登録できないこと" do
       @user_deli.token = nil
       @user_deli.valid?

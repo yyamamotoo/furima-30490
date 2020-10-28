@@ -1,15 +1,13 @@
 class PurchasersController < ApplicationController
   before_action :authenticate_user!
+  before_action :deli, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @user_deli = UserDeli.new
     if @item.purchaser.present?
       redirect_to root_path
-    else
-      unless current_user != @item.user
-        redirect_to root_path
-      end
+    elsif current_user == @item.user
+      redirect_to root_path
     end
   end
 
@@ -18,7 +16,6 @@ class PurchasersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @user_deli = UserDeli.new(deli_params)
 
     if @user_deli.valid?
@@ -44,5 +41,9 @@ class PurchasersController < ApplicationController
       card: deli_params[:token],
       currency: "jpy",
     )
+  end
+
+  def deli
+    @item = Item.find(params[:item_id])
   end
 end
