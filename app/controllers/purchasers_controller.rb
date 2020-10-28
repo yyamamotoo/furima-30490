@@ -4,8 +4,12 @@ class PurchasersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @user_deli = UserDeli.new
-    unless current_user != @item.user
+    if @item.purchaser.present?
       redirect_to root_path
+    else
+      unless current_user != @item.user
+        redirect_to root_path
+      end
     end
   end
 
@@ -16,6 +20,7 @@ class PurchasersController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @user_deli = UserDeli.new(deli_params)
+
     if @user_deli.valid?
       pay_item
       @user_deli.save
@@ -33,7 +38,7 @@ class PurchasersController < ApplicationController
   end
 
   def pay_item
-    PPayjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item[:price],
       card: deli_params[:token],
