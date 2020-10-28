@@ -25,4 +25,5 @@ class User < ApplicationRecord
   format: { with: /\A(?=.*?[a-z])(?=.*?[\d])\w{6,12}\z/, message: "Password Include both letters and numbers" }
 
   has_many :items
+  has_one :purchaser
 end

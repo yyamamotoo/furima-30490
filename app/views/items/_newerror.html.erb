@@ -1,5 +1,6 @@
 
 <% if model.errors.any? %>
+  
       <div id="error_explanation">
           <% I18n.t("errors.messages.not_saved",
                     count: model.errors.count,
@@ -14,4 +15,5 @@
         </ul>
       </div>
      </div>
+   
 <% end %>
